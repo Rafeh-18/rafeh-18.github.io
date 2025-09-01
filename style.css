@@ -86,9 +86,6 @@ a::after {
   transition: width 0.3s ease;
 }
 
-a:hover::after {
-  width: 100%;
-}
 
 /* Container utilities */
 .container {
@@ -914,4 +911,5 @@ body {
   display: flex;
   justify-content: center;
 }
+
 
