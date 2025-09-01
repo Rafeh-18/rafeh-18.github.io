@@ -911,5 +911,14 @@ body {
   display: flex;
   justify-content: center;
 }
+.form-success {
+  color: var(--success);
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.35);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-top: 16px;
+}
+
 
 
