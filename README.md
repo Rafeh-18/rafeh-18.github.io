@@ -1,14 +1,23 @@
-Rafeh Maddouri Portfolio
+# 🌐 Rafeh Maddouri – Portfolio  
 
-Welcome to my personal portfolio repository! This project showcases my work, skills, and projects in Data Science, Machine Learning, AI.
-About Me
 
-Hi, I’m Rafeh Maddouri (Raf), a passionate programmer and aspiring freelancer. I enjoy building data-driven applications and exploring AI & machine learning projects. This portfolio is a reflection of my skills and projects I have worked on.
+This is my personal **portfolio website**, built to showcase my work in **Data Science, Machine Learning, AI, and Programming**.  
+It reflects my projects, skills, and journey as a developer.  
 
-🌐 Portfolio: [Your Portfolio Link]
+🔗 **Live Demo:** [Rafeh Maddouri Portfolio](https://rafeh-18.github.io/Rafeh-Maddouri-Portfolio/)  
 
-📧 Email: rafeehmaddouri@gmail.com
+---
 
-💼 LinkedIn: https://www.linkedin.com/in/rafeh-maddouri/
+## ✨ Features  
+- 📱 Responsive and modern design  
+- 🌙 Inspired by AI & Data Science aesthetics  
+- 🌍 Bilingual support (English & French)  
+- 🗂️ Project showcase section  
+- 📬 Contact page with direct links to my profiles  
 
-🛠️ Skills: Python, Machine Learning, Data Analysis, React, Flask, HTML, CSS, JavaScript
+---
+
+## 🛠️ Tech Stack  
+- **Frontend:** HTML, CSS, JavaScript  
+- **Design:** Custom CSS with a data-science theme  
+- **Deployment:** GitHub Pages  
