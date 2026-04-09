@@ -1,348 +1,982 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rafeh Maddouri - Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/png" href="logo/icon.png" />
-  </head>
-  <body>
-    <!-- Top Navigation -->
-    <header class="top-nav">
-      <div class="container nav-inner">
-        <div class="logo">
-          <img src="logo/profile.png" alt="Profile" class="nav-profile-pic" />
-          <span>Rafeh Maddouri</span>
-        </div>
-        <nav>
-          <a href="#home" class="nav-link active" data-page="home">Home</a>
-          <a href="#projects" class="nav-link" data-page="projects">Projects</a>
-          <a href="#contact" class="nav-link" data-page="contact">Contact</a>
-        </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rafeh Maddouri — Data Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Tokens ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1117;
+      --bg2:      #161b22;
+      --bg3:      #21262d;
+      --border:   #30363d;
+      --text:     #e6edf3;
+      --muted:    #8b949e;
+      --primary:  #3b82f6;
+      --accent:   #7c6cf7;
+      --cyan:     #06b6d4;
+      --green:    #238636;
+      --grad:     linear-gradient(135deg, #3b82f6, #7c6cf7);
+      --shadow:   0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Animated background particles ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 5%,  rgba(59,130,246,.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 5%,  rgba(124,108,247,.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 95%, rgba(6,182,212,.08)  0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Nav ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,17,23,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--grad);
+      box-shadow: 0 0 8px rgba(124,108,247,.6);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(1.4); opacity: .7; }
+    }
+
+    nav { display: flex; gap: 4px; }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 500;
+      border: 1px solid transparent;
+      transition: all .2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+      background: var(--bg3);
+      border-color: var(--border);
+    }
+
+    nav a.active {
+      color: #a78bfa;
+    }
+
+    /* ── Sections ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 90px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      color: #7c6cf7;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Hero ── */
+    #hero { padding-top: 100px; padding-bottom: 100px; text-align: center; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124,108,247,.12);
+      border: 1px solid rgba(124,108,247,.25);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: .82rem;
+      color: #a78bfa;
+      margin-bottom: 28px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .hero-badge span { width:6px; height:6px; border-radius:50%; background:#7c6cf7; display:inline-block; animation: pulse 2s infinite; }
+
+    h1.hero-title {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero-title .name {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .hero-intro {
+      max-width: 600px;
+      margin: 0 auto 36px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 22px;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--bg3);
+      cursor: pointer;
+      transition: all .22s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(124,108,247,.5);
+      box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    }
+
+    .btn.primary {
+      background: var(--grad);
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(59,130,246,.35);
+    }
+
+    .btn.primary:hover {
+      box-shadow: 0 10px 28px rgba(59,130,246,.5);
+      border-color: transparent;
+    }
+
+    .btn-icon { font-size: .85rem; }
+
+    /* ── Section headings ── */
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 40px;
+      position: relative;
+      padding-bottom: 14px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 44px; height: 3px;
+      background: var(--grad);
+      border-radius: 3px;
+    }
+
+    /* ── About ── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+
+    /* Education & Achievements */
+    .box-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .box-item {
+      padding: 14px 18px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all .2s;
+    }
+
+    .box-item:hover {
+      border-color: rgba(124,108,247,.4);
+      transform: translateX(4px);
+    }
+
+    .box-item strong { color: var(--text); font-size: .95rem; display: block; margin-bottom: 3px; }
+    .box-item span   { color: var(--muted); font-size: .85rem; }
+
+    /* ── Skills ── */
+    #skills .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      transition: all .25s;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(59,130,246,.5);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .skill-card h3 {
+      font-size: .95rem;
+      font-weight: 600;
+      color: #a78bfa;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-card ul { list-style: none; }
+
+    .skill-card li {
+      color: var(--muted);
+      font-size: .9rem;
+      padding: 5px 0 5px 18px;
+      position: relative;
+      border-bottom: 1px solid rgba(48,54,61,.5);
+    }
+
+    .skill-card li:last-child { border-bottom: none; }
+
+    .skill-card li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: .8rem;
+    }
+
+    /* ── Experience ── */
+    #experience .timeline {
+      border-left: 2px solid var(--border);
+      padding-left: 28px;
+      margin-left: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .timeline-item {
+      position: relative;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      transition: all .22s;
+    }
+
+    .timeline-item:hover {
+      border-color: rgba(59,130,246,.4);
+      transform: translateX(4px);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 22px; left: -37px;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--grad);
+      box-shadow: 0 0 8px rgba(124,108,247,.5);
+    }
+
+    .timeline-item h3 { font-size: 1.05rem; margin-bottom: 4px; }
+
+    .timeline-date {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      color: #7c6cf7;
+      background: rgba(124,108,247,.1);
+      border: 1px solid rgba(124,108,247,.2);
+      padding: 2px 10px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item p { color: var(--muted); font-size: .93rem; }
+
+    /* ── Projects ── */
+    #projects .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all .28s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      border-color: rgba(59,130,246,.5);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.5);
+    }
+
+    .project-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: var(--bg3);
+    }
+
+    .project-card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .project-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+    .project-card p  { color: var(--muted); font-size: .9rem; line-height: 1.65; flex: 1; margin-bottom: 14px; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+
+    .tag {
+      font-size: .75rem;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: rgba(59,130,246,.12);
+      border: 1px solid rgba(59,130,246,.25);
+      color: #93c5fd;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .project-card .btn { font-size: .82rem; padding: 8px 16px; }
+
+    /* ── Contact ── */
+    #contact .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 40px;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 18px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+      transition: all .2s;
+    }
+
+    .contact-link:hover {
+      border-color: rgba(124,108,247,.4);
+      transform: translateX(5px);
+      color: var(--text);
+    }
+
+    .contact-link strong { color: var(--text); min-width: 80px; font-size: .88rem; }
+
+    .contact-link .icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 18px; }
+    .form-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+    label { font-size: .88rem; font-weight: 600; color: var(--text); }
+
+    input, textarea {
+      padding: 12px 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: .93rem;
+      outline: none;
+      transition: all .2s;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59,130,246,.2);
+    }
+
+    textarea { min-height: 130px; }
+
+    .form-success {
+      color: #34d399;
+      background: rgba(52,211,153,.1);
+      border: 1px solid rgba(52,211,153,.25);
+      padding: 12px 16px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 28px 24px;
+      color: var(--muted);
+      font-size: .88rem;
+      font-family: 'JetBrains Mono', monospace;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Scroll-reveal animations ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+    }
+
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(32px);
+      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+    }
+
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Stagger children */
+    .stagger > * { opacity: 0; transform: translateY(24px); transition: opacity .5s ease, transform .5s ease; }
+    .stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: .05s; }
+    .stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: .12s; }
+    .stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: .19s; }
+    .stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: .26s; }
+    .stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: .33s; }
+
+    /* Hero floating animation */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .hero-badge { animation: float 4s ease-in-out infinite; }
+
+    /* Typing cursor blink */
+    @keyframes blink { 50% { opacity: 0; } }
+    .cursor { display: inline-block; width: 2px; height: 1.1em; background: #7c6cf7; vertical-align: text-bottom; margin-left: 2px; animation: blink 1s step-end infinite; }
+
+    /* Glow on section titles */
+    .section-title .glow {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      #about .about-grid,
+      #contact .contact-grid { grid-template-columns: 1fr; }
+      #projects .project-grid { grid-template-columns: 1fr; }
+      nav a { padding: 7px 12px; font-size: .82rem; }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 60px 16px; }
+      .cta-row { flex-direction: column; align-items: center; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header>
+    <div class="nav-inner">
+      <a href="#hero" class="logo">
+        <div class="logo-dot"></div>
+        Rafeh Maddouri
+      </a>
+      <nav id="nav">
+        <a href="#hero"       class="nav-link active">Home</a>
+        <a href="#about"      class="nav-link">About</a>
+        <a href="#skills"     class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#projects"   class="nav-link">Projects</a>
+        <a href="#contact"    class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-badge">
+      <span></span> Available for internships
+    </div>
+    <h1 class="hero-title">
+      Hi, I'm <span class="name">Rafeh Maddouri</span><span class="cursor"></span>
+    </h1>
+    <p class="hero-tagline">Data Scientist · ML Engineer · AI Builder</p>
+    <p class="hero-intro">
+      I love turning complex data into clear insights and smart solutions. From predictive models to AI-driven systems, I build technology that actually makes a difference.
+    </p>
+    <div class="cta-row">
+      <a href="#projects" class="btn primary"><span class="btn-icon">🚀</span> View Projects</a>
+      <a href="logo/Rafeh_Maddouri_CV.pdf" download class="btn"><span class="btn-icon">📄</span> Download CV</a>
+      <a href="#contact" class="btn"><span class="btn-icon">✉️</span> Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">01 / about</div>
+    <h2 class="section-title reveal"><span class="glow">About</span> Me</h2>
+    <div class="about-grid">
+      <div class="about-text reveal-left">
+        <p style="margin-bottom:16px;">
+          I'm a junior data scientist passionate about machine learning, data analytics, and AI automation. I enjoy solving challenging problems and finding creative ways to make data useful and actionable.
+        </p>
+        <p>
+          Currently seeking my first internship to grow my skills, gain real-world experience, and contribute to impactful projects. Open to roles in ML, NLP, and data engineering.
+        </p>
       </div>
-    </header>
-
-    <!-- Main Content -->
-    <main id="content-area">
-      <!-- Home Section -->
-      <section id="home" class="page-section active">
-        <div class="home">
-          <div class="hero">
-            <h1>Hi, I’m <span class="highlight">Rafeh Maddouri</span></h1>
-            <p class="tagline">
-              Data Scientist | Machine Learning Enthusiast | AI Innovator
-            </p>
-            <p class="intro" id="intro">
-I love turning complex data into clear insights and smart solutions. From predictive models to AI-driven systems, I enjoy building technology that actually makes a difference.
-            </p>
-            <div class="cta">
-              <a href="#projects" class="btn">View My Projects</a>
-              <a href="logo/Rafeh_Maddouri_CV.pdf" download="Rafeh_Maddouri_CV.pdf" class="btn primary">Download CV</a>
-              <a href="#contact" class="btn">Get in Touch</a>
-            </div>
+      <div class="reveal-right">
+        <h3 style="font-size:.9rem; color:var(--muted); margin-bottom:14px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;">Education & Certs</h3>
+        <div class="box-list stagger">
+          <div class="box-item">
+            <strong>Baccalaureate — Computer Science</strong>
+            <span>2024</span>
           </div>
-
-          <div class="about">
-            <h2>About Me</h2>
-            <p>
-                I’m a junior data scientist passionate about machine learning, data analytics, and AI automation. I like solving challenging problems and exploring creative ways to make data useful.
-              Currently, I’m looking for my first internship to grow my skills, gain real-world experience, and contribute to impactful projects.
-            </p>
+          <div class="box-item">
+            <strong>NVIDIA — Fundamentals of Deep Learning</strong>
+            <span>Certificate</span>
           </div>
-
-          <div class="skills">
-            <h2>Skills</h2>
-            <div class="skill-grid">
-              
-              <div class="skill-category">
-                <h3>Programming</h3>
-                <ul>
-                  <li>Python</li>
-                  <li>R</li>
-                  <li>C/C++</li>
-                  <li>JavaScript</li>
-                  <li>SQL</li>
-                </ul>
-              </div>
-
-              
-              <div class="skill-category">
-                <h3>Machine Learning</h3>
-                <ul>
-                  <li>Regression & Classification</li>
-                  <li>NLP</li>
-                  <li>Deep Learning</li>
-                </ul>
-              </div>
-
-              
-              <div class="skill-category">
-                <h3>Data Tools</h3>
-                <ul>
-                  <li>Pandas, NumPy</li>
-                  <li>scikit-learn, TensorFlow, PyTorch</li>
-                  <li>Tableau, Power BI</li>
-                </ul>
-              </div>
-
-              
-              <div class="skill-category">
-                <h3>Cloud & Big Data</h3>
-                <ul>
-                  <li>AWS</li>
-                  <li>Apache Spark</li>
-                  <li>Hadoop</li>
-                </ul>
-              </div>
-              
-              <div class="skill-category">
-                <h3>Soft Skills</h3>
-                <ul>
-                  <li>Communication</li>
-                  <li>Teamwork and Collaboration</li>
-                  <li>Problem-Solving</li>
-                </ul>
-              </div>
-
-              
-            </div>
+          <div class="box-item">
+            <strong>NVIDIA — Generative AI with Diffusion Models</strong>
+            <span>Certificate</span>
           </div>
-
-          <div class="experience">
-            <h2>Experience</h2>
-            <div class="timeline">
-              <div class="timeline-item">
-                <h3>Freelance Data Scientist</h3>
-                <span class="date">2025 – Present</span>
-                <p>
-                  Delivered ML and analytics solutions for clients on Fiverr and
-                  Upwork.
-                </p>
-              </div>
-              <div class="timeline-item">
-                <h3>internship — [Company Name]</h3>
-                <span class="date">2025</span>
-                <p>
-                  Actively seeking my first internship to apply my data science knowledge in a professional environment.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="education">
-            <h2>Education</h2>
-            <ul>
-              <li>
-                <strong>baccalaureate’s in Computer Science</strong>, 2024
-              </li>
-              <li>
-                NVIDIA – Fundamentals of Deep Learning
-              </li>
-              <li>
-                Kaggle – Intro to Machine Learning
-              </li>
-            </ul>
-          </div>
-
-          <div class="achievements">
-            <h2>Achievements</h2>
-            <ul>
-              
-              <li>Completed multiple applied ML projects showcasing analytical and coding skills.</li>
-              <li>Built a fake news classifier with 92% accuracy</li>
-             
-            </ul>
+          <div class="box-item">
+            <strong>Kaggle — Intro to Machine Learning</strong>
+            <span>Certificate</span>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <!-- Projects Section -->
-      <section id="projects" class="page-section">
-        <div class="projects">
-          <h2>My Projects</h2>
-          <div class="project-grid">
-            <div class="project-card">
-              <img src="logo/Project3.jpg" alt="Data Analysis Application" />
-              <h3>Data Analysis Application</h3>
-              <p>
-                A powerful Python-based tool for cleaning, analyzing, and
-                visualizing data in CSV or Excel format.
-              </p>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">Pandas</span>
-                <span class="tag">Matplotlib</span>
-                <span class="tag">Seaborn</span>
-              </div>
-              <div class="actions">
-                <a
-                  href="https://github.com/Rafeh-18/DataAnalysisApp"
-                  target="_blank"
-                  class="btn"
-                  >View Code</a
-                >
-              </div>
-            </div>
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">02 / skills</div>
+    <h2 class="section-title reveal"><span class="glow">Technical</span> Skills</h2>
+    <div class="skill-grid stagger">
+      <div class="skill-card">
+        <h3>⌨️ Programming</h3>
+        <ul>
+          <li>Python</li>
+          <li>R</li>
+          <li>C / C++</li>
+          <li>JavaScript</li>
+          <li>SQL</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>🤖 Machine Learning</h3>
+        <ul>
+          <li>Regression & Classification</li>
+          <li>NLP</li>
+          <li>Deep Learning</li>
+          <li>Model Evaluation</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>🛠️ Data Tools</h3>
+        <ul>
+          <li>Pandas, NumPy</li>
+          <li>scikit-learn, TensorFlow</li>
+          <li>PyTorch</li>
+          <li>Tableau, Power BI</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>☁️ Cloud & Big Data</h3>
+        <ul>
+          <li>AWS</li>
+          <li>Apache Spark</li>
+          <li>Hadoop</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>🤝 Soft Skills</h3>
+        <ul>
+          <li>Communication</li>
+          <li>Teamwork & Collaboration</li>
+          <li>Problem-Solving</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">03 / experience</div>
+    <h2 class="section-title reveal"><span class="glow">Work</span> Experience</h2>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <h3>Freelance Data Scientist</h3>
+        <div class="timeline-date">2025 – Present</div>
+        <p>Delivered ML and analytics solutions for clients on Fiverr and Upwork. Built end-to-end pipelines from data cleaning to model deployment.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <h3>Seeking First Internship</h3>
+        <div class="timeline-date">2025</div>
+        <p>Actively seeking an internship to apply data science knowledge in a professional environment and contribute to real-world impactful projects.</p>
+      </div>
+    </div>
 
-              <div class="project-card">
-              <img src="logo/project2.png" alt="Fake News Detector" />
-              <h3>Fake News Detector</h3>
-              <p>
-                A machine learning project that classifies news snippets as Fake or Real.
-              </p>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">scikit-learn</span>
-                <span class="tag">TF-IDF</span>
-                <span class="tag">XGBoost</span>
-                <span class="tag">Flask</span>
-              </div>
-              <div class="actions">
-                <a
-                  href="https://github.com/Rafeh-18/fake-news-detector"
-                  target="_blank"
-                  class="btn"
-                  >View Code</a
-                >
-              </div>
-            </div>
+    <h2 class="section-title reveal" style="margin-top:56px;"><span class="glow">Key</span> Achievements</h2>
+    <div class="box-list stagger">
+      <div class="box-item">
+        <strong>🏆 Fake news classifier — 92% accuracy</strong>
+        <span>Built using TF-IDF + XGBoost with a Flask web interface</span>
+      </div>
+      <div class="box-item">
+        <strong>📊 Multiple applied ML projects</strong>
+        <span>Showcasing analytical and coding skills across NLP, classification & more</span>
+      </div>
+    </div>
+  </section>
 
-            <div class="project-card">
-              <img src="logo/project1.png" alt="ChatBot" />
-              <h3>Chat Bot For Websites</h3>
-              <p>
-                This is a chatbot project designed to be integrated into any website.
-              </p>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">Flask</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-              </div>
-              <div class="actions">
-                <a
-                  href="https://github.com/Rafeh-18/Chat-bot-for-websites"
-                  target="_blank"
-                  class="btn"
-                  >View Code</a
-                >
-              </div>
-            </div>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">04 / projects</div>
+    <h2 class="section-title reveal"><span class="glow">Featured</span> Projects</h2>
+    <div class="project-grid stagger">
 
-            
-            
-           
-            </div>
+      <div class="project-card">
+        <img class="project-card-img" src="logo/Project3.jpg" alt="Data Analysis App" onerror="this.style.background='#1c2128';this.style.minHeight='160px';" />
+        <div class="project-card-body">
+          <h3>Data Analysis Application</h3>
+          <p>A powerful Python-based tool for cleaning, analyzing, and visualizing data in CSV or Excel format.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Seaborn</span>
           </div>
+          <a href="https://github.com/Rafeh-18/DataAnalysisApp" target="_blank" class="btn">View Code →</a>
         </div>
-      </section>
+      </div>
 
-      <!-- Contact Section -->
-      <section id="contact" class="page-section">
-        <div class="contact-page">
-          <div class="contact-info">
-            <h2>Get in Touch</h2>
-            <ul>
-              <li>
-                <strong>Email:</strong>
-                <a href="mailto:rafeehmaddouri@gmail.com"
-                  >rafeehmaddouri@gmail.com</a
-                >
-              </li>
-              <li>
-                <strong>LinkedIn:</strong>
-                <a href="https://linkedin.com/in/rafeh-maddouri" target="_blank"
-                  >linkedin.com/in/rafeh-maddouri</a
-                >
-              </li>
-              <li>
-                <strong>GitHub:</strong>
-                <a href="https://github.com/Rafeh-18" target="_blank"
-                  >github.com/Rafeh-18</a
-                >
-              </li>
-              <li>
-                <strong>Kaggle:</strong>
-                <a href="https://www.kaggle.com/rafehmaddouri" target="_blank"
-                  >kaggle.com/rafehmaddouri</a
-                >
-              </li>
-              <li>
-                <strong>Fiverr:</strong>
-                <a href="https://www.fiverr.com/rafeh_datasc" target="_blank"
-                  >fiverr.com/rafeh_datasc</a
-                >
-              </li>
-              <li>
-                <strong>Upwork:</strong>
-                <a
-                  href="https://www.upwork.com/freelancers/~01ff6a856ff95e9be9"
-                  target="_blank"
-                  >Upwork Profile</a
-                >
-              </li>
-              <li>
-                <strong>WhatsApp:</strong>
-                <a href="https://wa.me/21690029370" target="_blank"
-                  >+216 50 695 255</a
-                >
-              </li>
-            </ul>
+      <div class="project-card">
+        <img class="project-card-img" src="logo/AI_text_class.png" alt="AI Text Classification" onerror="this.style.background='#1c2128';this.style.minHeight='160px';" />
+        <div class="project-card-body">
+          <h3>AI Text Classification Web App</h3>
+          <p>Full-stack app classifying text into 22 categories using TF-IDF + Logistic Regression, with JWT auth and prediction history.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">React</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">JWT</span>
           </div>
-
-          <div class="contact-form-wrapper">
-            <h3>Send Me a Message</h3>
-            <form id="contact-form" class="contact-form">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" name="name" required />
-
-              <label for="email">Your Email</label>
-              <input type="email" id="email" name="_replyto" required />
-
-              <label for="message">Your Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="8"
-                required
-              ></textarea>
-
-              <button type="submit" class="btn primary">Send Message</button>
-            </form>
-            <!-- Success message -->
-            <div id="form-success" class="form-success" style="display: none">
-              ✅ Your message was sent successfully. I’ll get back to you soon!
-            </div>
-          </div>
+          <a href="https://github.com/Rafeh-18/AI-Text-Classification-Web-App" target="_blank" class="btn">View Code →</a>
         </div>
-      </section>
-    </main>
+      </div>
 
-    <footer>
-      <p>© 2025 Rafeh Maddouri</p>
-    </footer>
-    <script src="control.js"></script>
-  </body>
+      <div class="project-card">
+        <img class="project-card-img" src="logo/project2.png" alt="Fake News Detector" onerror="this.style.background='#1c2128';this.style.minHeight='160px';" />
+        <div class="project-card-body">
+          <h3>Fake News Detector</h3>
+          <p>A machine learning project that classifies news snippets as Fake or Real with 92% accuracy using XGBoost.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">TF-IDF</span>
+            <span class="tag">XGBoost</span>
+            <span class="tag">Flask</span>
+          </div>
+          <a href="https://github.com/Rafeh-18/fake-news-detector" target="_blank" class="btn">View Code →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img class="project-card-img" src="logo/project1.png" alt="Chat Bot" onerror="this.style.background='#1c2128';this.style.minHeight='160px';" />
+        <div class="project-card-body">
+          <h3>Chat Bot for Websites</h3>
+          <p>An embeddable chatbot designed to integrate seamlessly into any website with a Python/Flask backend.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML/CSS</span>
+          </div>
+          <a href="https://github.com/Rafeh-18/Chat-bot-for-websites" target="_blank" class="btn">View Code →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">05 / contact</div>
+    <h2 class="section-title reveal"><span class="glow">Get in</span> Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-links stagger">
+        <a href="mailto:rafeehmaddouri@gmail.com" class="contact-link">
+          <div class="icon">📧</div>
+          <strong>Email</strong>
+          rafeehmaddouri@gmail.com
+        </a>
+        <a href="https://linkedin.com/in/rafeh-maddouri" target="_blank" class="contact-link">
+          <div class="icon">💼</div>
+          <strong>LinkedIn</strong>
+          linkedin.com/in/rafeh-maddouri
+        </a>
+        <a href="https://github.com/Rafeh-18" target="_blank" class="contact-link">
+          <div class="icon">🐙</div>
+          <strong>GitHub</strong>
+          github.com/Rafeh-18
+        </a>
+        <a href="https://www.kaggle.com/rafehmaddouri" target="_blank" class="contact-link">
+          <div class="icon">📊</div>
+          <strong>Kaggle</strong>
+          kaggle.com/rafehmaddouri
+        </a>
+        <a href="https://www.fiverr.com/rafeh_datasc" target="_blank" class="contact-link">
+          <div class="icon">🟢</div>
+          <strong>Fiverr</strong>
+          fiverr.com/rafeh_datasc
+        </a>
+        <a href="https://wa.me/21650695255" target="_blank" class="contact-link">
+          <div class="icon">💬</div>
+          <strong>WhatsApp</strong>
+          +216 50 695 255
+        </a>
+      </div>
+
+      <div class="reveal-right">
+        <p class="form-title">Send a Message</p>
+        <form id="contact-form" class="contact-form">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="_replyto" placeholder="john@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" placeholder="Hello, I'd like to…" required></textarea>
+          </div>
+          <button type="submit" class="btn primary" style="align-self:flex-start;">
+            <span class="btn-icon">🚀</span> Send Message
+          </button>
+          <div id="form-success" class="form-success">✅ Message sent! I'll get back to you soon.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Rafeh Maddouri · Built with ❤️ · Tunis, Tunisia</p>
+  </footer>
+
+  <script>
+    // ── Active nav on scroll ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    // ── Smooth nav click ──
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href').slice(1);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // ── Scroll reveal ──
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger').forEach(el => {
+      revealObs.observe(el);
+    });
+
+    // ── Contact form ──
+    const form = document.getElementById('contact-form');
+    const successMsg = document.getElementById('form-success');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type=submit]');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://formspree.io/f/mblakabe', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+        if (res.ok) {
+          form.reset();
+          successMsg.style.display = 'block';
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        alert('Network error. Please try again.');
+      }
+
+      btn.innerHTML = '<span class="btn-icon">🚀</span> Send Message';
+      btn.disabled = false;
+    });
+  </script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
