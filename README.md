@@ -4,7 +4,7 @@
 This is my personal **portfolio website**, built to showcase my work in **Data Science, Machine Learning, AI, and Programming**.  
 It reflects my projects, skills, and journey as a developer.  
 
-🔗 **Live Demo:** [Rafeh Maddouri Portfolio](https://rafeh-18.github.io/)  
+🔗 **Live Demo:** [Rafeh Maddouri Portfolio]([https://rafeh-18.github.io/](https://rafeh-maddouri.vercel.app/))  
 
 ---
 
