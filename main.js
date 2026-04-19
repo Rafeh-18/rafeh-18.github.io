@@ -158,7 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
   let W, H, mouse = { x: -9999, y: -9999 };
 
-  const SYMBOLS = ['∑ xᵢ', '∂L/∂w', 'ŷ = σ(Wx)', '∇J(θ)', 'P(y|x)', 'e⁻ˣ²', 'argmax', 'softmax', '‖w‖₂', 'tanh(z)', 'ReLU', 'KL(p‖q)'];
+  const SYMBOLS = ['∑ xᵢ', '∂L/∂w', 'ŷ = σ(Wx)', '∇J(θ)', 'P(y|x)', 'e⁻ˣ²', 'argmax', 'softmax', '‖w‖₂', 'tanh(z)', 'ReLU', 'KL(p‖q)','𝔼[X]', 'Var(X)', 'N(μ, σ²)', 'p̂', 'cov(X,Y)','F1-score',
+  'ROC ↗', 'AUC', 'R²','f(x) = mx + b','[1 0 1]', '[0 1 0]', '[x₁, x₂, …]',];
   const NODE_COUNT = 55;
   const PARTICLE_COUNT = 40;
   const CONNECTION_DIST = 160;
