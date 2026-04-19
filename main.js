@@ -152,3 +152,190 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountBadges();
   initContactForm();
 });
+/* ── Neural Network Background ── */
+(function () {
+  const canvas = document.getElementById('neural-bg');
+  const ctx = canvas.getContext('2d');
+  let W, H, mouse = { x: -9999, y: -9999 };
+
+  const SYMBOLS = ['∑ xᵢ', '∂L/∂w', 'ŷ = σ(Wx)', '∇J(θ)', 'P(y|x)', 'e⁻ˣ²', 'argmax', 'softmax', '‖w‖₂', 'tanh(z)', 'ReLU', 'KL(p‖q)'];
+  const NODE_COUNT = 55;
+  const PARTICLE_COUNT = 40;
+  const CONNECTION_DIST = 160;
+  const REPEL_DIST = 120;
+  const REPEL_FORCE = 0.012;
+
+  let nodes = [], particles = [], symbols = [], pulses = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function randRange(a, b) { return a + Math.random() * (b - a); }
+
+  function initNodes() {
+    nodes = Array.from({ length: NODE_COUNT }, () => ({
+      x: randRange(0, W), y: randRange(0, H),
+      vx: randRange(-0.18, 0.18), vy: randRange(-0.18, 0.18),
+      r: randRange(2, 4.5),
+      color: Math.random() < 0.5 ? '#3b82f6' : Math.random() < 0.5 ? '#06b6d4' : '#7c6cf7',
+      pulse: 0
+    }));
+  }
+
+  function initParticles() {
+    particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+      x: randRange(0, W), y: randRange(0, H),
+      vx: randRange(-0.3, 0.3), vy: randRange(-0.3, 0.3),
+      alpha: randRange(0.08, 0.22),
+      r: randRange(1, 2.2)
+    }));
+  }
+
+  function initSymbols() {
+    symbols = Array.from({ length: 18 }, () => ({
+      x: randRange(0, W), y: randRange(0, H),
+      vx: randRange(-0.06, 0.06), vy: randRange(-0.06, 0.06),
+      text: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
+      alpha: randRange(0.04, 0.10),
+      size: randRange(13, 18)
+    }));
+  }
+
+  function spawnPulse() {
+    const connected = [];
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        if (Math.sqrt(dx * dx + dy * dy) < CONNECTION_DIST) connected.push([i, j]);
+      }
+    }
+    if (connected.length) {
+      const pair = connected[Math.floor(Math.random() * connected.length)];
+      pulses.push({ from: pair[0], to: pair[1], t: 0, speed: randRange(0.008, 0.018) });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    /* connections */
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < CONNECTION_DIST) {
+          const alpha = (1 - d / CONNECTION_DIST) * 0.18;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(124,108,247,${alpha})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    /* pulses along connections */
+    pulses = pulses.filter(p => {
+      p.t += p.speed;
+      if (p.t > 1) { nodes[p.to].pulse = 8; return false; }
+      const nx = nodes[p.from].x + (nodes[p.to].x - nodes[p.from].x) * p.t;
+      const ny = nodes[p.from].y + (nodes[p.to].y - nodes[p.from].y) * p.t;
+      ctx.beginPath();
+      ctx.arc(nx, ny, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(6,182,212,0.7)';
+      ctx.fill();
+      return true;
+    });
+
+    /* nodes */
+    nodes.forEach(n => {
+      const glow = n.pulse > 0 ? n.pulse / 8 : 0;
+      if (glow > 0) {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + 6 * glow, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(6,182,212,${0.18 * glow})`;
+        ctx.fill();
+        n.pulse--;
+      }
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = n.color + 'cc';
+      ctx.fill();
+    });
+
+    /* particles */
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(99,179,237,${p.alpha})`;
+      ctx.fill();
+    });
+
+    /* math symbols */
+    symbols.forEach(s => {
+      ctx.save();
+      ctx.globalAlpha = s.alpha;
+      ctx.font = `300 ${s.size}px 'Inter', system-ui, sans-serif`;
+      ctx.fillStyle = '#c4b5fd';
+      ctx.filter = 'none';
+      ctx.letterSpacing = '0.05em';
+      ctx.fillText(s.text, s.x, s.y);
+      ctx.restore();
+    });
+  }
+
+  function update() {
+    nodes.forEach(n => {
+      const dx = n.x - mouse.x, dy = n.y - mouse.y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d < REPEL_DIST && d > 0) {
+        n.vx += (dx / d) * REPEL_FORCE;
+        n.vy += (dy / d) * REPEL_FORCE;
+      }
+      n.vx *= 0.995; n.vy *= 0.995;
+      const spd = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+      if (spd > 0.5) { n.vx = n.vx / spd * 0.5; n.vy = n.vy / spd * 0.5; }
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < -10) n.x = W + 10;
+      if (n.x > W + 10) n.x = -10;
+      if (n.y < -10) n.y = H + 10;
+      if (n.y > H + 10) n.y = -10;
+    });
+
+    particles.forEach(p => {
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 80 && d > 0) { p.vx += (dx / d) * 0.004; p.vy += (dy / d) * 0.004; }
+      p.vx *= 0.99; p.vy *= 0.99;
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+    });
+
+    symbols.forEach(s => {
+      s.x += s.vx; s.y += s.vy;
+      if (s.x < -40) s.x = W + 40; if (s.x > W + 40) s.x = -40;
+      if (s.y < -20) s.y = H + 20; if (s.y > H + 20) s.y = -20;
+    });
+  }
+
+  function loop() {
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', () => { resize(); initNodes(); initParticles(); initSymbols(); });
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+  resize();
+  initNodes();
+  initParticles();
+  initSymbols();
+
+  setInterval(spawnPulse, 800);
+  loop();
+})();
