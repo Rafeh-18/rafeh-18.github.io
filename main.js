@@ -4,7 +4,7 @@
 
 /* ── Active nav on scroll ── */
 const sections = document.querySelectorAll('section[id]');
-const navLinks  = document.querySelectorAll('.nav-link');
+const navLinks = document.querySelectorAll('.nav-link');
 
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -60,12 +60,12 @@ document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger').forE
 
 function initCollapsibles() {
   document.querySelectorAll('[data-collapse-toggle]').forEach(btn => {
-    const group    = btn.dataset.collapseToggle;
-    const hidden   = () => document.querySelectorAll(`[data-collapse-hidden="${group}"]`);
-    const all      = () => document.querySelectorAll(`[data-collapsible="${group}"] [data-collapse-item]`);
+    const group = btn.dataset.collapseToggle;
+    const hidden = () => document.querySelectorAll(`[data-collapse-hidden="${group}"]`);
+    const all = () => document.querySelectorAll(`[data-collapsible="${group}"] [data-collapse-item]`);
     const container = document.querySelector(`[data-collapsible="${group}"]`);
-    const noun     = (container && container.dataset.collapseNoun) || 'items';
-    const label    = btn.querySelector('.show-toggle-label');
+    const noun = (container && container.dataset.collapseNoun) || 'items';
+    const label = btn.querySelector('.show-toggle-label');
 
     /* Count total items for the label */
     const total = all().length;
@@ -107,7 +107,7 @@ function initCollapsibles() {
 function initCountBadges() {
   document.querySelectorAll('[data-count-badge]').forEach(badge => {
     const group = badge.dataset.countBadge;
-    const noun  = badge.dataset.countNoun || 'items';
+    const noun = badge.dataset.countNoun || 'items';
     const total = document.querySelectorAll(`[data-collapsible="${group}"] [data-collapse-item]`).length;
     badge.textContent = `${total} ${noun}`;
   });
@@ -115,7 +115,7 @@ function initCountBadges() {
 
 /* ── Contact form ── */
 function initContactForm() {
-  const form       = document.getElementById('contact-form');
+  const form = document.getElementById('contact-form');
   const successMsg = document.getElementById('form-success');
   if (!form) return;
 
@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCollapsibles();
   initCountBadges();
   initContactForm();
+  initCertsScroll();
 });
 /* ── Neural Network Background ── */
 (function () {
@@ -158,8 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
   let W, H, mouse = { x: -9999, y: -9999 };
 
-  const SYMBOLS = ['∑ xᵢ', '∂L/∂w', 'ŷ = σ(Wx)', '∇J(θ)', 'P(y|x)', 'e⁻ˣ²', 'argmax', 'softmax', '‖w‖₂', 'tanh(z)', 'ReLU', 'KL(p‖q)','𝔼[X]', 'Var(X)', 'N(μ, σ²)', 'p̂', 'cov(X,Y)','F1-score',
-  'ROC ↗', 'AUC', 'R²','f(x) = mx + b','[1 0 1]', '[0 1 0]', '[x₁, x₂, …]',];
+  const SYMBOLS = ['∑ xᵢ', '∂L/∂w', 'ŷ = σ(Wx)', '∇J(θ)', 'P(y|x)', 'e⁻ˣ²', 'argmax', 'softmax', '‖w‖₂', 'tanh(z)', 'ReLU', 'KL(p‖q)', '𝔼[X]', 'Var(X)', 'N(μ, σ²)', 'p̂', 'cov(X,Y)', 'F1-score',
+    'ROC ↗', 'AUC', 'R²', 'f(x) = mx + b', '[1 0 1]', '[0 1 0]', '[x₁, x₂, …]',];
   const NODE_COUNT = 55;
   const PARTICLE_COUNT = 40;
   const CONNECTION_DIST = 160;
@@ -169,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let nodes = [], particles = [], symbols = [], pulses = [];
 
   function resize() {
-    W = canvas.width  = window.innerWidth;
+    W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
   }
 
@@ -340,3 +341,54 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(spawnPulse, 800);
   loop();
 })();
+
+
+function initCertsScroll() {
+  const certs = [
+    { abbr: 'NV', cls: 'nvidia', name: 'Fundamentals of Deep Learning', issuer: 'NVIDIA', year: '2024', desc: 'Neural network basics, CNNs, RNNs, and training best practices using the NVIDIA DLI platform.', tags: ['Deep Learning', 'PyTorch', 'GPU'] },
+    { abbr: 'NV', cls: 'nvidia', name: 'Generative AI with Diffusion Models', issuer: 'NVIDIA', year: '2024', desc: 'Diffusion model architectures, DDPM, and latent diffusion for image generation.', tags: ['Diffusion Models', 'GenAI', 'PyTorch'] },
+    { abbr: 'KG', cls: 'kaggle', name: 'Intro to Machine Learning', issuer: 'Kaggle', year: '2023', desc: 'Decision trees, random forests, model validation, and missing values with scikit-learn.', tags: ['scikit-learn', 'ML', 'Python'] },
+    { abbr: 'CS', cls: 'generic', name: 'Baccalaureate — Computer Science', issuer: '2024', year: '', desc: 'National diploma with a specialisation in Computer Science and Mathematics.', tags: ['Computer Science', 'Maths'] },
+    { abbr: 'U', cls: 'generic', name: 'Intro to AI and Gen AI', issuer: 'Udacity', year: '2024', desc: 'AI fundamentals, prompt engineering, and practical applications of generative AI tools.', tags: ['AI', 'Prompt Engineering'] },
+    { abbr: 'CC', cls: 'generic', name: 'Cisco AI Technical Practitioner', issuer: 'Cisco', year: '2024', desc: 'AITECH v1.0 — AI/ML concepts, responsible AI, and industry use-cases.', tags: ['AI', 'Networking', 'Cisco'] },
+    { abbr: 'DC', cls: 'generic', name: 'AI Engineer for Data Scientists Associate', issuer: 'DataCamp', year: '2025', desc: 'Building, deploying, and evaluating AI-powered solutions as a data scientist.', tags: ['AI Engineering', 'MLOps', 'DataCamp'] },
+  ];
+
+  const track = document.getElementById('certs-track');
+  if (!track) return;
+
+  [...certs, ...certs].forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'cert-item';
+    el.dataset.idx = i % certs.length;
+    el.style.cursor = 'pointer';
+    el.innerHTML = `
+      <div class="cert-logo ${c.cls}">${c.abbr}</div>
+      <div class="cert-info">
+        <div class="cert-name">${c.name}</div>
+        <div class="cert-issuer">${c.issuer}${c.year ? ' · ' + c.year : ''}</div>
+      </div>`;
+    track.appendChild(el);
+  });
+
+  const modal = document.getElementById('cert-modal');
+  const close = document.getElementById('cert-modal-close');
+
+  const openModal = c => {
+    document.getElementById('cm-logo').className = 'cert-modal-logo ' + c.cls;
+    document.getElementById('cm-logo').textContent = c.abbr;
+    document.getElementById('cm-title').textContent = c.name;
+    document.getElementById('cm-issuer').textContent = c.issuer + (c.year ? ' · ' + c.year : '');
+    document.getElementById('cm-desc').textContent = c.desc;
+    document.getElementById('cm-tags').innerHTML = c.tags.map(t => `<span class="cert-modal-tag">${t}</span>`).join('');
+    modal.classList.add('open');
+  };
+
+  track.addEventListener('click', e => {
+    const chip = e.target.closest('.cert-item');
+    if (chip) openModal(certs[+chip.dataset.idx]);
+  });
+
+  close.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+}

@@ -810,3 +810,107 @@ footer {
   .btn { width: 100%; justify-content: center; }
   .cert-grid { grid-template-columns: 1fr; }
 }
+/* ── Certs Scroll ── */
+.certs-wrap {
+  overflow: hidden;
+  position: relative;
+  padding: 4px 0;
+}
+
+.certs-wrap::before, .certs-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.certs-wrap::before { left: 0;  background: linear-gradient(to right, var(--bg2), transparent); }
+.certs-wrap::after  { right: 0; background: linear-gradient(to left,  var(--bg2), transparent); }
+
+.certs-track {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  animation: scroll-left 30s linear infinite;
+}
+
+.certs-track:hover { animation-play-state: paused; }
+
+@keyframes scroll-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Cert Modal ── */
+.cert-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+
+.cert-modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.cert-modal-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 380px;
+  width: 90%;
+  position: relative;
+  transform: scale(.88);
+  transition: transform .22s cubic-bezier(.16,1,.3,1);
+}
+
+.cert-modal-overlay.open .cert-modal-box { transform: scale(1); }
+
+.cert-modal-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color .15s;
+}
+
+.cert-modal-close:hover { color: var(--text); }
+
+.cert-modal-logo {
+  width: 52px; height: 52px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 14px;
+}
+
+.cert-modal-title  { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.cert-modal-issuer { font-size: .85rem; color: #7c6cf7; margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; }
+.cert-modal-desc   { font-size: .88rem; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); padding-top: 12px; }
+
+.cert-modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+
+.cert-modal-tag {
+  font-size: .72rem;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.2);
+  color: #93c5fd;
+  font-family: 'JetBrains Mono', monospace;
+}
