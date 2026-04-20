@@ -345,13 +345,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initCertsScroll() {
   const certs = [
-    { abbr: 'NV', cls: 'nvidia', name: 'Fundamentals of Deep Learning', issuer: 'NVIDIA', year: '2024', desc: 'Neural network basics, CNNs, RNNs, and training best practices using the NVIDIA DLI platform.', tags: ['Deep Learning', 'PyTorch', 'GPU'] },
-    { abbr: 'NV', cls: 'nvidia', name: 'Generative AI with Diffusion Models', issuer: 'NVIDIA', year: '2024', desc: 'Diffusion model architectures, DDPM, and latent diffusion for image generation.', tags: ['Diffusion Models', 'GenAI', 'PyTorch'] },
-    { abbr: 'KG', cls: 'kaggle', name: 'Intro to Machine Learning', issuer: 'Kaggle', year: '2023', desc: 'Decision trees, random forests, model validation, and missing values with scikit-learn.', tags: ['scikit-learn', 'ML', 'Python'] },
+    { abbr: 'NV', cls: 'nvidia', name: 'Fundamentals of Deep Learning', issuer: 'NVIDIA', year: '2025', desc: 'Neural network basics, CNNs, RNNs, and training best practices using the NVIDIA DLI platform.', tags: ['Deep Learning', 'PyTorch', 'GPU'] },
+    { abbr: 'NV', cls: 'nvidia', name: 'Generative AI with Diffusion Models', issuer: 'NVIDIA', year: '2026', desc: 'Diffusion model architectures, DDPM, and latent diffusion for image generation.', tags: ['Diffusion Models', 'GenAI', 'PyTorch'] },
+    { abbr: 'KG', cls: 'kaggle', name: 'Intro to Machine Learning', issuer: 'Kaggle', year: '2025', desc: 'Decision trees, random forests, model validation, and missing values with scikit-learn.', tags: ['scikit-learn', 'ML', 'Python'] },
     { abbr: 'CS', cls: 'generic', name: 'Baccalaureate — Computer Science', issuer: '2024', year: '', desc: 'National diploma with a specialisation in Computer Science and Mathematics.', tags: ['Computer Science', 'Maths'] },
-    { abbr: 'U', cls: 'generic', name: 'Intro to AI and Gen AI', issuer: 'Udacity', year: '2024', desc: 'AI fundamentals, prompt engineering, and practical applications of generative AI tools.', tags: ['AI', 'Prompt Engineering'] },
-    { abbr: 'CC', cls: 'generic', name: 'Cisco AI Technical Practitioner', issuer: 'Cisco', year: '2024', desc: 'AITECH v1.0 — AI/ML concepts, responsible AI, and industry use-cases.', tags: ['AI', 'Networking', 'Cisco'] },
-    { abbr: 'DC', cls: 'generic', name: 'AI Engineer for Data Scientists Associate', issuer: 'DataCamp', year: '2025', desc: 'Building, deploying, and evaluating AI-powered solutions as a data scientist.', tags: ['AI Engineering', 'MLOps', 'DataCamp'] },
+    { abbr: 'U', cls: 'generic', name: 'Intro to AI and Gen AI', issuer: 'Udacity', year: '2026', desc: 'AI fundamentals, prompt engineering, and practical applications of generative AI tools.', tags: ['AI', 'Prompt Engineering'] },
+    { abbr: 'CC', cls: 'generic', name: 'Cisco AI Technical Practitioner', issuer: 'Cisco', year: '2026', desc: 'AITECH v1.0 — AI/ML concepts, responsible AI, and industry use-cases.', tags: ['AI', 'Networking', 'Cisco'] },
+    { abbr: 'DC', cls: 'generic', name: 'AI Engineer for Data Scientists Associate', issuer: 'DataCamp', year: '2026', desc: 'Building, deploying, and evaluating AI-powered solutions as a data scientist.', tags: ['AI Engineering', 'MLOps', 'DataCamp'] },
   ];
 
   const track = document.getElementById('certs-track');
